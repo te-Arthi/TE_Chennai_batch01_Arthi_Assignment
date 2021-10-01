@@ -1,0 +1,44 @@
+try {
+			
+	ref.createNewFile();
+		
+} 
+catch (IOException e) {
+
+
+
+}
+
+try {
+	FileWriter obj = new FileWriter(ref);
+
+
+	obj.write("Hi Hello File Wrriten Successfull...");
+
+	obj.flush();
+		
+} catch (IOException e) {
+
+
+		
+  }
+
+		
+  try {
+			
+  	File sal = new File("E:\\batch\\Arthi\\Arthi.txt");
+
+  	Scanner scanner = new Scanner(sal);
+
+  	while (scanner.hasNext()) {
+
+		System.out.println(scanner.nextLine());
+
+		scanner.close();
+
+	}
+
+  } catch (Exception b) {
+
+
+    }
