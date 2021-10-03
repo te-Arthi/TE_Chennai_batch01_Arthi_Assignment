@@ -1,0 +1,26 @@
+package cm.te.assignment.a;
+
+	abstract class Bike{  
+		  abstract void run();  
+		}  
+		class Splendor extends Bike{  
+		void run(){
+			System.out.println("new bike");
+		}  
+		}
+
+package cm.te.assignment.a;
+
+	public class Assignment {
+
+		public static void main(String[] args) {
+			 Bike obj = new Splendor();  
+			 obj.run();  
+
+		}
+
+	}
+
+
+output:
+new bike

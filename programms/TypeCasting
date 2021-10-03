@@ -1,0 +1,96 @@
+
+
+
+
+
+
+package cm.te.assignment.a;
+
+public interface Collections {
+
+	public static void main() {
+		System.out.println("Interface's Static method");
+	}
+
+	public abstract void set();
+
+	public abstract void list();
+
+	public abstract void queue();
+
+}
+
+
+package cm.te.assignment.a;
+
+public class Framework implements Collections {
+
+	public void set() {
+		System.out.println("Framework class Set");
+	}
+
+	public void list() {
+		System.out.println("Framework class list");
+	}
+
+	public void queue() {
+		System.out.println("Framework class queue");
+	}
+
+	public int sortedSet(int a, int b) {
+
+		return a + b;
+
+	}
+
+	public double sortedSet1(int a, int b) {
+
+		return a + b;
+	}
+}
+
+
+package cm.te.assignment.a;
+
+	public class SubclassOfall {
+
+		public static void main(String[] args) {
+			Collections ref =(Collections) new Framework(); //up casting..
+			
+			ref.set();
+			ref.list();
+			ref.queue();
+			Collections.main();
+			
+			/*
+			 * ref.sortedSet(); ref.sortedSet1();  // these are all subclass unimplemented methods we cannot able to access those when up casting is done
+			 */
+			System.out.println("-------------------------------------------");
+			
+			Framework obj =(Framework) new Framework();
+			
+			obj.sortedSet(10, 100);   // now we can able to access  the methods those are all in sub class during down casting
+			obj.sortedSet1(8, 56);
+			
+			obj.set();
+			obj.list();
+			obj.queue();
+			Collections.main();
+		}
+	}
+
+
+
+
+
+output:
+Framework class Set
+Framework class list
+Framework class queue
+Interface's Static method
+-------------------------------------------
+Framework class Set
+Framework class list
+Framework class queue
+Interface's Static method
+

@@ -1,0 +1,62 @@
+package cm.te.assignment.a;
+public class bank {
+	private long balance;
+
+	public bank() {
+		this.balance = 12000;
+	}
+	
+	public Long getBalance() {
+		return this.getBalance();
+	}
+	
+	public void withDraw(long withDrawAmount) {
+		if (withDrawAmount <= balance) {
+			this.balance -= withDrawAmount;
+			System.out.println("With Draw Successfull");
+			System.out.println("Current Balance : " 
+				+ getBalance());
+		} else {
+			System.out.println("Insufficient Amount");
+		}
+	}
+
+	public void deposite(long depositeAmount) {
+		if (depositeAmount >= 100) {
+			this.balance += depositeAmount;
+			System.out.println("Deposite Successfull");
+			System.out.println("Current Balance : " + getBalance());
+		} else {
+			System.out.println("Amount Should be more than 100");
+		}
+	}
+}
+
+package cm.te.assignment.a;
+import java.util.Scanner;
+public class banktest extends bank {
+	public static void main(String[] args) {
+
+		System.out.println(" Welcome to Union Bank Of India ");
+		Scanner obj = new Scanner(System.in);
+		System.out.println("enter amount to be deposit : ");
+		long depositamt = obj.nextLong();
+		System.out.println("enter amount to be withdrawn : ");
+		long withdrawamt = obj.nextLong();
+		
+		banktest ref = new banktest();
+	
+		System.out.println(ref.getBalance());
+		ref.deposite(depositamt);
+		ref.withDraw(withdrawamt);
+	}
+}
+
+
+output:
+
+ Welcome to Union Bank Of India 
+enter amount to be deposit : 
+10000
+enter amount to be withdrawn : 
+2000

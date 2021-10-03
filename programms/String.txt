@@ -1,0 +1,87 @@
+package cm.te.assignment.a;
+
+public class string {
+	
+
+		public static void main(String[] args) {
+
+			String def="Arthiii";
+			String toi= "amusara";
+			
+			for (int i = toi.length()-1; i >=0; i--) {
+				System.out.print(toi.charAt(i));
+			}
+			System.out.println(" ");
+			for (int j = def.length()-1; j >=0; j--) {
+				System.out.print(def.charAt(j));
+			}
+			System.out.println(" ");
+			System.out.println(def.length());
+
+			System.out.println(def.charAt(3));
+
+			System.out.println(def.startsWith("Pra"));
+
+			System.out.println(def.concat(" Developer"));
+
+			System.out.println(def.endsWith("ar"));
+
+			System.out.println(def.substring(4));
+
+			System.out.println(def.toUpperCase());
+
+			System.out.println(def.toLowerCase());
+
+			System.out.println(def.equals(toi));
+
+			System.out.println(toi.endsWith("rhi"));
+
+			System.out.println(def.contains("ath"));
+
+			System.out.println(toi.hashCode());
+
+			System.out.println(def.hashCode());
+
+			System.out.println(def.toString());
+
+			System.out.println(toi.toString());
+
+			System.out.println(string.class);
+
+			System.out.println(toi.replace("amusara", "arthiii"));
+
+			System.out.println(def.replaceAll("arthiii", "Pragathii"));
+
+			System.out.println(def.split("dad"));
+			
+
+		
+		}
+
+
+		}
+
+
+
+output:
+arasuma 
+iiihtrA 
+7
+h
+false
+Arthiii Developer
+false
+iii
+ARTHIII
+arthiii
+false
+false
+false
+-874303930
+932251300
+Arthiii
+amusara
+class cm.te.assignment.a.string
+arthiii
+Arthiii
+[Ljava.lang.String;@15db9742

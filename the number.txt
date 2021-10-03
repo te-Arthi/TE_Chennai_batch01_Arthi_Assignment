@@ -1,0 +1,17 @@
+package cm.te.assignment.a;
+
+public class Thenumber {
+	public static void main(String[] args) {
+	    int n1 = 30, n2 = 13;
+	    int gcd = 1;
+	    for (int i = 1; i <= n1 && i <= n2; ++i) {
+	      if (n1 % i == 0 && n2 % i == 0)
+	        gcd = i;
+	    }
+	    System.out.println("GCD of " + n1 +" and " + n2 + " is " + gcd);
+	  }
+	}
+
+
+output:
+GCD of 30 and 13 is 1

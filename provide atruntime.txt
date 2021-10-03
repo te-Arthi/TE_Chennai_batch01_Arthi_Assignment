@@ -1,0 +1,19 @@
+package cm.te.assignment.a;
+
+public class provideatruntime {
+
+		public static void main(String[] args) {
+
+			System.out.println("Arguments passed at runtime. "+
+					args.length  + " here ");
+		          
+		        for(int i = 0; i < args.length; i++) {
+		            System.out.println("Argument " + i + " = " 
+		                               + args[i]);
+		        }
+		}
+	}
+
+
+output:
+Arguments passed at runtime. 0 here 

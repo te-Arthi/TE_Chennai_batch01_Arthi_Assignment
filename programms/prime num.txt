@@ -1,0 +1,27 @@
+package cm.te.assignment.a;
+
+public class Primenumber {
+public static void main (String[] args){
+  int count1=1;
+  int num=21;
+  int count=0;
+  for(int i=2;i<num;i++){
+  if(num%i==0)
+  count++;
+ }
+}
+  if(count==0){	
+  System.out.println("The entered number is a prime num" + num);
+}
+
+
+
+
+output:
+The entered number is not a prime num21
+
+  else{
+  System.out.println("The entered number is not a prime num" + num);
+}
+}
+}

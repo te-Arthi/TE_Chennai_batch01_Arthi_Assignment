@@ -1,0 +1,36 @@
+package cm.te.assignment.a;
+
+import java.util.Scanner;
+
+public class SimpleInterest {
+
+
+		static void simpleIntrest(double p, int n, double r ) {
+			
+			double simpleintrest = (p*n*r)/100;
+			System.out.println("Simple Intrest of amount "+p
+					+" at rate of intrest("+r+") is "+simpleintrest);	
+		}
+
+		public static void main(String[] args){
+
+			Scanner ref = new Scanner(System.in);
+			System.out.println("enter principle Amount : ");
+			double principleAmount = ref.nextDouble();
+			System.out.println("enter number of years : ");
+			int numberofyears = ref.nextInt();
+			System.out.println("enter rate of intrest : ");
+			double rateofintrest = ref.nextDouble();
+			simpleIntrest(principleAmount, numberofyears,rateofintrest);
+			
+		}
+	}
+
+
+output:
+enter principle Amount : 
+3000
+enter number of years : 
+2
+enter rate of intrest : 
+20
