@@ -1,0 +1,16 @@
+ 
+list:
+List<int>a=new Arraylist<int>;
+       ar.add(1);
+       ar.remove(7);
+      for(int num:ar)
+          System.out.println(num);
+          
+          
+          
+          Scanner s=new Scanner(System.in);
+          for(int i=0;i<10;i++){
+              int b=new s.nextInt();
+              a.add(b);
+          }
+      return 10;
