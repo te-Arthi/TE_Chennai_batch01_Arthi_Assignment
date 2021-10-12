@@ -1,0 +1,44 @@
+MYSQL Commands:
+
+1.create db-->create database databasename;
+
+2.Display-->show database;
+
+3.Establish connection: use databasename;
+
+4. how many tables display presents-->
+ show tables;
+
+5.To create table--create table tablename(colname1  datatype constraints,
+colname2  datatype constraints,
+colname3  datatype constraints,
+colnameN  datatype constraints)
+);
+
+6.description of a table atributes(column)-->desc table_name;
+
+7.inserts records into table--> insert into tablename(column1 name)
+values(datas);        (or)
+insert into tablename values(datas);  (or)
+insert into tablename values(datas),(datas2),(datan);
+
+8.display full table-->select * from tablename;
+
+9.to display particular column--> select columnname from tablename;
+
+10.alter table--> alter table tablename add  columnname  datatype;
+
+11.delete table--> alter table tablename drop column columnname;
+
+12. alter table tablename  modify columnname datatype constraints;
+
+13.alter table tablename change oldcolumnname  newcolumnname datatype;
+ 
+14.rename table oldtablename to newtablename;
+
+15.truncate table tablename ;
+select * from tablename;
+drop table tablename;
+desc tablename;
+
+16.select salary*12 as 'annualsalary';
