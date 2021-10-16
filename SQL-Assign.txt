@@ -1,0 +1,498 @@
+/*-----------Created new table1 "EMP"--------*/  
+mysql> create table EMP(
+    -> EMPNO int NOT NULL,
+    -> ENAME VARCHAR(10),
+    -> JOB VARCHAR(9),
+    -> MGR int,
+    -> HIREDATE DATE,
+    -> SAL double check(salary>=0),
+    -> COMM double,
+    -> DEPTNO int);
+Query OK, 0 rows affected (0.42 sec)
+
+/*-----------Added 14 records int0 table "EMP"--------*/
+
+mysql> insert into emp values(7369,'SMITH','CLERK',7902,'2008-12-17',800,20,null);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into emp values(7566,'JONE','MANAGER',7839,'1981-04-02',2975,20,null);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into emp values(7499,'ALLEN','SALESMAN',7698,'1981-02-20',1600,30,300);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(7521,'WARD','SALESMAN',7698,'1981-02-22',1250,30,500);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp values(7698,'BLAKE',' MANAGER',7839,'1981-05-01',2850,30,null);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp values(7782,'CLARK','MANAGER',7839,'1981-0-09',2450,10,null);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into emp values(7788,'SCOTT','ANALYST',7566,'1987-04-19',3000,20,null);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into emp values(7839,'KING','PRESIDENT',null,'1981-11-17',5000,10,null);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into emp values(7844,'TURNER','SALESMAN',7698,'1981-09-08',1500 ,30,0);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into emp values(7876,'ADAMS','CLERK',7788,'1987-05-23',1100 ,20,null);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(7900,'JAMES','CLERK',7698,'1981-12-03',950 ,30,null);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into emp values(7902,'FORD','ANALYST',7566,'1982-11-03',3000 ,20,null);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(7934,'MILLER','CLERK',7782,'1892-01-22',1300 ,0,null);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into emp values(7654,'MARTIN','SALESMAN',7698,'1981-09-28',1250,30,1400);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-----------+------+------------+------+--------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7566 | JONE   | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD   | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
+|  7934 | MILLER | CLERK     | 7782 | 1892-01-22 | 1300 |     10 | NULL |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+-----------+------+------------+------+--------+------+
+14 rows in set (0.00 sec)
+
+/*-----------Created new table2 "DEPT"--------*/
+
+mysql> create table dept(
+    -> deptno int(2) not null,
+    -> dname varchar(10),
+    -> loc varchar(15));
+Query OK, 0 rows affected (0.34 sec)
+
+/*-----------Added 4 records into table1 "DEPT"--------*/
+
+mysql> insert into dept values(10,'ACCOUNTING','NEW YORK');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into dept values(20,'Research','Dallas');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into dept values(30,'Sales','Chicago');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into dept values(40,'OPERATIONS','BOSTON');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select *from dept;
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | Research   | Dallas   |
+|     30 | Sales      | Chicago  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+<----------------------------------------------------------->
+
+1) LIST ALL THE EMPLOYEES WHOSE COMMISSION IS NULL
+    
+mysql> select * from emp where comm is null;
++-------+--------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-----------+------+------------+------+--------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7566 | JONE   | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7698 | BLAKE  |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD   | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
+|  7934 | MILLER | CLERK     | 7782 | 1892-01-22 | 1300 |     10 | NULL |
++-------+--------+-----------+------+------------+------+--------+------+
+10 rows in set (0.00 sec)
+
+
+2) LIST ALL THE EMPLOYEES WHO DON’T HAVE A REPORTING MANAGER^C
+
+mysql> select * from emp where mgr is null;
++-------+-------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+-----------+------+------------+------+--------+------+
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
++-------+-------+-----------+------+------------+------+--------+------+
+1 row in set (0.00 sec)
+
+3) LIST ALL THE SALESMEN IN DEPT 30
+
+mysql> select * from emp where job='salesman' and deptno=30;
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+----------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+4) LIST ALL THE SALESMEN IN DEPT NUMBER 30 AND HAVING SALARY GREATER THAN 1500
+
+mysql> select * from emp where job='salesman' and deptno=30 and sal >1500;
++-------+-------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+----------+------+------------+------+--------+------+
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
++-------+-------+----------+------+------------+------+--------+------+
+1 row in set (0.00 sec)
+
+5) LIST ALL THE EMPLOYEES WHOSE NAME STARTS WITH ‘S’ OR ‘A’
+
+mysql> select * from emp where ename like 's%' or ename like 'a%';
++-------+-------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+----------+------+------------+------+--------+------+
+|  7369 | SMITH | CLERK    | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7788 | SCOTT | ANALYST  | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7876 | ADAMS | CLERK    | 7788 | 1987-05-23 | 1100 |     20 | NULL |
++-------+-------+----------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+6) LIST ALL THE EMPLOYEES EXCEPT THOSE WHO ARE WORKING IN DEPT 10 & 20.
+
+mysql> select * from emp where deptno not in(10,20);
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+----------+------+------------+------+--------+------+
+6 rows in set (0.00 sec)
+
+7) LIST THE EMPLOYEES WHOSE NAME DOES NOT START WITH ‘S’^C
+
+mysql> select * from emp where ename not like 's%';
++-------+--------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-----------+------+------------+------+--------+------+
+|  7566 | JONE   | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD   | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
+|  7934 | MILLER | CLERK     | 7782 | 1892-01-22 | 1300 |     10 | NULL |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+-----------+------+------------+------+--------+------+
+12 rows in set (0.00 sec)
+
+8) LIST ALL THE EMPLOYEES WHO ARE HAVING REPORTING MANAGERS IN DEPT 10^C
+
+mysql> select * from emp where mgr is not null and deptno=10;
++-------+--------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+---------+------+------------+------+--------+------+
+|  7782 | CLARK  | MANAGER | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7934 | MILLER | CLERK   | 7782 | 1892-01-22 | 1300 |     10 | NULL |
++-------+--------+---------+------+------------+------+--------+------+
+2 rows in set (0.00 sec)
+
+9) LIST ALL THE EMPLOYEES WHOSE COMMISSION IS NULL AND WORKING AS CLERK
+
+mysql> select * from emp where comm is null and job='clerk';
++-------+--------+-------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB   | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-------+------+------------+------+--------+------+
+|  7369 | SMITH  | CLERK | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7876 | ADAMS  | CLERK | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7900 | JAMES  | CLERK | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7934 | MILLER | CLERK | 7782 | 1892-01-22 | 1300 |     10 | NULL |
++-------+--------+-------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+10) LIST ALL THE EMPLOYEES WHO DON’T HAVE A REPORTING MANAGER IN DEPTNO 10 OR 30
+
+mysql> select * from emp where mgr is null and deptno in (10,30);
++-------+-------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+-----------+------+------------+------+--------+------+
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
++-------+-------+-----------+------+------------+------+--------+------+
+1 row in set (0.00 sec)
+
+11) LIST ALL THE SALESMEN IN DEPT 30 WITH SAL MORE THAN 2450^C
+
+mysql> select * from emp where job='salesman' and deptno=30 and sal>2450;
+Empty set (0.00 sec)
+
+12) LIST ALL THE ANALYST IN DEPT NUMBER 20 AND HAVING SALARY GREATER THAN 2500
+
+mysql> select * from emp where deptno =20 and sal>2500 and job ='analyst';
++-------+-------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+---------+------+------------+------+--------+------+
+|  7788 | SCOTT | ANALYST | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7902 | FORD  | ANALYST | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++-------+-------+---------+------+------------+------+--------+------+
+2 rows in set (0.00 sec)
+
+13) LIST ALL THE EMPLOYEES WHOSE NAME STARTS WITH ‘M’ OR ‘J’^C
+
+mysql> select * from emp where ename like 'm%' or ename like 'j%';
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7566 | JONE   | MANAGER  | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7934 | MILLER | CLERK    | 7782 | 1892-01-22 | 1300 |     10 | NULL |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+----------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+14) LIST ALL THE EMPLOYEES WITH ANNUAL SALARY EXCEPT THOSE WHO ARE WORKING IN DEPT 30
+
+mysql> select ename,sal*12 as 'Annual Salary' from emp where deptno !=30;
++--------+---------------+
+| ename  | Annual Salary |
++--------+---------------+
+| SMITH  |          9600 |
+| JONE   |         35700 |
+| CLARK  |         29400 |
+| SCOTT  |         36000 |
+| KING   |         60000 |
+| ADAMS  |         13200 |
+| FORD   |         36000 |
+| MILLER |         15600 |
++--------+---------------+
+8 rows in set (0.00 sec)
+
+15) LIST THE EMPLOYEES WHOSE NAME DOES NOT END WITH ‘ES’ OR ‘R’
+
+mysql> select * from emp where ename not like '%es' and ename not like '%r';
++-------+--------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-----------+------+------------+------+--------+------+
+|  7369 | SMITH  | CLERK     | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7566 | JONE   | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7902 | FORD   | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+-----------+------+------------+------+--------+------+
+11 rows in set (0.00 sec)
+
+16) LIST ALL THE EMPLOYEES WHO ARE HAVING REPORTING MANAGERS IN DEPT 10 ALONG WITH 10% HIKE IN SALARY
+
+mysql> select ename,deptno,sal+sal*.1 as 'hike' from emp where mgr is not null and deptno=10;
++--------+--------+------+
+| ename  | deptno | hike |
++--------+--------+------+
+| CLARK  |     10 | 2695 |
+| MILLER |     10 | 1430 |
++--------+--------+------+
+2 rows in set (0.00 sec)
+
+17) DISPLAY ALL THE EMPLOYEE WHO ARE ‘SALESMAN’S HAVING ‘E’ AS THE LAST BUT ONE CHARACTER IN ENAME BUT SALARY HAVING EXACTLY 4 CHARACTER
+
+mysql> select * from emp where ename like '%e_' and sal like '____';
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7934 | MILLER | CLERK    | 7782 | 1892-01-22 | 1300 |     10 | NULL |
++-------+--------+----------+------+------------+------+--------+------+
+3 rows in set (0.00 sec)
+
+18) DISPLAY ALL THE EMPLOYEE WHO ARE JOINED AFTER YEAR 81
+
+mysql> select * from emp where hiredate>'1981-12-31';
++-------+-------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+---------+------+------------+------+--------+------+
+|  7369 | SMITH | CLERK   | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7788 | SCOTT | ANALYST | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7876 | ADAMS | CLERK   | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7902 | FORD  | ANALYST | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++-------+-------+---------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+19) DISPLAY ALL THE EMPLOYEE WHO ARE JOINED IN FEB
+
+mysql> select * from emp where hiredate like'____-02-__';
++-------+-------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+----------+------+------------+------+--------+------+
+|  7499 | ALLEN | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD  | SALESMAN | 7698 | 1981-02-22 | 1250 |     30 |  500 |
++-------+-------+----------+------+------------+------+--------+------+
+2 rows in set, 1 warning (0.00 sec)
+
+20) LIST THE EMPLOYEES WHO ARE NOT WORKING AS MANAGERS AND CLERKS IN DEPT 10 AND 20 WITH A SALARY IN THE RANGE OF 1000 TO 3000^C
+
+mysql> select * from emp where job not in ('manager','clerk') and deptno in ('10','20') and sal between 1000 and 3000;
++-------+-------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+---------+------+------------+------+--------+------+
+|  7788 | SCOTT | ANALYST | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7902 | FORD  | ANALYST | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++-------+-------+---------+------+------------+------+--------+------+
+2 rows in set (0.00 sec)
+
+21) LIST THE EMPLOYEES WHOSE SALARY NOT IN THE RANGE OF 1000 TO 2000 AND WORKING IN DEPT 10,20 OR 30 EXCEPT ALL SALESMEN
+
+mysql> select * from emp where job != 'salesman' and deptno in (10,20,30) and sal not between 1000 and 2000;
++-------+-------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+-----------+------+------------+------+--------+------+
+|  7369 | SMITH | CLERK     | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7566 | JONE  | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7698 | BLAKE |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7788 | SCOTT | ANALYST   | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7900 | JAMES | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD  | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++-------+-------+-----------+------+------------+------+--------+------+
+8 rows in set (0.00 sec)
+
+22) LIST THE DEPARTMENT NAMES WHICH ARE HAVING LETTER ‘O’ IN THEIR LOCATIONS AS WELL AS THEIR DEPARTMENT NAMES
+mysql> select * from dept where loc like '%o%'and dname like '%o%';
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+2 rows in set (0.00 sec)
+
+23) DISPLAY ALL THE EMPLOYEES WHOSE JOB HAS STRING ‘MAN’ IN IT.
+
+mysql> select * from emp where job like 'man%';
++-------+-------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+---------+------+------------+------+--------+------+
+|  7566 | JONE  | MANAGER | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7782 | CLARK | MANAGER | 7839 | 1981-00-09 | 2450 |     10 | NULL |
++-------+-------+---------+------+------------+------+--------+------+
+2 rows in set (0.00 sec)
+
+24)LIST THE EMPLOYEES WHO ARE HIRED AFTER 82 AND BEFORE 87.
+
+mysql> select * from emp where hiredate between '1982-12-31' and '1987-12-31';
++-------+-------+---------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+---------+------+------------+------+--------+------+
+|  7788 | SCOTT | ANALYST | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7876 | ADAMS | CLERK   | 7788 | 1987-05-23 | 1100 |     20 | NULL |
++-------+-------+---------+------+------------+------+--------+------+
+2 rows in set (0.00 sec)
+
+25)WAQTD ALL THE DETAILS OF EMPLOYEES HIRED IN NOVEMBER AND DECEMBER.
+
+mysql> select * from emp where hiredate like '%11%' or hiredate like '%12%';
++-------+-------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+-------+-----------+------+------------+------+--------+------+
+|  7369 | SMITH | CLERK     | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7900 | JAMES | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD  | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++-------+-------+-----------+------+------------+------+--------+------+
+4 rows in set, 2 warnings (0.00 sec)	
+
+26)LIST ALL THE EMPLOYEE NAMES AND COMISSION FOR THOSE EMPLOYEES WHO EARN COMISSION MORE THAN THEIR SALARY
+
+mysql> select * from emp where comm>sal;
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+----------+------+------------+------+--------+------+
+1 row in set (0.00 sec)
+
+27)WAQTD NAME AND DESIGNATION FOR ALL THE EMPLOYEES HAVING REPORTING MANAGERS AND ALSO THRIE NAMES STARTING WITH ‘S'
+
+mysql> select ename,job from emp where mgr is not null and ename like 's%';
++-------+---------+
+| ename | job     |
++-------+---------+
+| SMITH | CLERK   |
+| SCOTT | ANALYST |
++-------+---------+
+2 rows in set (0.00 sec)
+
+28)WAQTD NAME AND SALARY OF ALL THE EMPLOYEES IF THEIR ANNUAL SALARY ENDS WITH ‘0’ .
+
+mysql> select ename,sal from emp where sal like '%0';
++--------+------+
+| ename  | sal  |
++--------+------+
+| SMITH  |  800 |
+| ALLEN  | 1600 |
+| WARD   | 1250 |
+| BLAKE  | 2850 |
+| CLARK  | 2450 |
+| SCOTT  | 3000 |
+| KING   | 5000 |
+| TURNER | 1500 |
+| ADAMS  | 1100 |
+| JAMES  |  950 |
+| FORD   | 3000 |
+| MILLER | 1300 |
+| MARTIN | 1250 |
++--------+------+
+13 rows in set (0.00 sec)
+
+29)WAQTD NAME OF THE EMPLOYEE HAVING ATLEAST 2L’s IN HIS NAME .
+
+mysql> select ename,job from emp where ename like '%ll%' or ename like 'll%' or ename like '%ll';
++--------+----------+
+| ename  | job      |
++--------+----------+
+| ALLEN  | SALESMAN |
+| MILLER | CLERK    |
++--------+----------+
+2 rows in set (0.00 sec)
+
+30)WAQTD NAME OF THE EMPLOYEES WHOS NAME STARTS WITH A ‘VOWEL'
+
+mysql> select ename,job from emp where ename like 'a%' or ename like 'e%' or ename like 'i%' or ename like 'o%' or ename like 'u%';
++-------+----------+
+| ename | job      |
++-------+----------+
+| ALLEN | SALESMAN |
+| ADAMS | CLERK    |
++-------+----------+
+2 rows in set (0.00 sec)
