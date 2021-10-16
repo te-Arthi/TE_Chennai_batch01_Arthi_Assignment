@@ -1,0 +1,331 @@
+
+1. LIST ENAME, JOB, ANNUAL SAL, DEPTNO, DNAME WHO EARN 30000 PER YEAR AND WHO ARE NOT
+CLERKS
+
+mysql> select ename,dname,job,sal*12 as 'Annual Salary' from emp,dept where emp.deptno=dept.deptno and sal*12<30000 and job != 'clerk';
++--------+------------+----------+---------------+
+| ename  | dname      | job      | Annual Salary |
++--------+------------+----------+---------------+
+| ALLEN  | Sales      | SALESMAN |         19200 |
+| WARD   | Sales      | SALESMAN |         15000 |
+| CLARK  | ACCOUNTING | MANAGER  |         29400 |
+| TURNER | Sales      | SALESMAN |         18000 |
+| MARTIN | Sales      | SALESMAN |         15000 |
++--------+------------+----------+---------------+
+5 rows in set (0.00 sec)
+
+2. LIST OUT THE ALL EMPLOYEES BY NAME AND EMPLOYEE NUMBER ALONG WITH THEIR
+MANAGER'S NAME AND EMPLOYEE NUMBER
+
+mysql> select e1.ename, e1.empno,e2.ename as 'Managers Name',e2.empno
+    -> from emp e1,emp e2 where e1.mgr = e2.empno;
++--------+-------+---------------+-------+
+| ename  | empno | Managers Name | empno |
++--------+-------+---------------+-------+
+| SCOTT  |  7788 | JONE          |  7566 |
+| FORD   |  7902 | JONE          |  7566 |
+| ALLEN  |  7499 | BLAKE         |  7698 |
+| WARD   |  7521 | BLAKE         |  7698 |
+| TURNER |  7844 | BLAKE         |  7698 |
+| JAMES  |  7900 | BLAKE         |  7698 |
+| MARTIN |  7654 | BLAKE         |  7698 |
+| MILLER |  7934 | CLARK         |  7782 |
+| ADAMS  |  7876 | SCOTT         |  7788 |
+| JONE   |  7566 | KING          |  7839 |
+| BLAKE  |  7698 | KING          |  7839 |
+| CLARK  |  7782 | KING          |  7839 |
+| SMITH  |  7369 | FORD          |  7902 |
++--------+-------+---------------+-------+
+13 rows in set (0.00 sec)
+
+
+3. DISPLAY ENAME,DNAME EVEN IF THERE NO EMPLOYEES WORKING IN A PARTICULAR
+DEPARTMENT.
+mysql> select e1.ename,e2.dname from emp e1,dept e2 where e1.deptno=e2.deptno;
++--------+------------+
+| ename  | dname      |
++--------+------------+
+| SMITH  | Research   |
+| JONE   | Research   |
+| ALLEN  | Sales      |
+| WARD   | Sales      |
+| BLAKE  | Sales      |
+| CLARK  | ACCOUNTING |
+| SCOTT  | Research   |
+| KING   | ACCOUNTING |
+| TURNER | Sales      |
+| ADAMS  | Research   |
+| JAMES  | Sales      |
+| FORD   | Research   |
+| MILLER | ACCOUNTING |
+| MARTIN | Sales      |
++--------+------------+
+14 rows in set (0.00 sec)
+
+4. DISPLAY THE DEPARTMENT NAME ALONG WITH TOTAL SALARY IN EACH DEPARTMENT^C
+
+mysql> select sum(sal),dname from emp,dept where emp.deptno=dept.deptno group by dname;
++----------+------------+
+| sum(sal) | dname      |
++----------+------------+
+|     8750 | ACCOUNTING |
+|    10875 | Research   |
+|     9400 | Sales      |
++----------+------------+
+3 rows in set (0.00 sec)
+
+5. DISPLAY EMPLOYEE NAME AND DEPARTMENT NAME FOR EACH EMPLOYEE^C
+
+mysql> select ename,dname from emp,dept where emp.deptno=dept.deptno;
++--------+------------+
+| ename  | dname      |
++--------+------------+
+| SMITH  | Research   |
+| JONE   | Research   |
+| ALLEN  | Sales      |
+| WARD   | Sales      |
+| BLAKE  | Sales      |
+| CLARK  | ACCOUNTING |
+| SCOTT  | Research   |
+| KING   | ACCOUNTING |
+| TURNER | Sales      |
+| ADAMS  | Research   |
+| JAMES  | Sales      |
+| FORD   | Research   |
+| MILLER | ACCOUNTING |
+| MARTIN | Sales      |
++--------+------------+
+14 rows in set (0.00 sec)
+
+6. DISPLAY LOCATION NAME OF THE EMPLOYEE WHO EARN COMMISSION.^C
+
+mysql> select emp.*,loc from dept,emp where comm is not null and emp.deptno=dept.deptno;
++-------+--------+----------+------+------------+------+--------+------+---------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm | loc     |
++-------+--------+----------+------+------------+------+--------+------+---------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 | Chicago |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |     30 |  500 | Chicago |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |     30 |    0 | Chicago |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 | Chicago |
++-------+--------+----------+------+------------+------+--------+------+---------+
+4 rows in set (0.00 sec)
+
+7. DISPLAY DEPT NAME OF THE EMPLOYEE WHO EARN MIN SALARY AND HAVE NO REPORTING
+MANAGER.
+
+mysql> select min(sal),ename,dname from emp,dept where emp.deptno=dept.deptno and mgr is not null group by dname;
++----------+-------+------------+
+| min(sal) | ename | dname      |
++----------+-------+------------+
+|     1300 | CLARK | ACCOUNTING |
+|      800 | SMITH | Research   |
+|      950 | ALLEN | Sales      |
++----------+-------+------------+
+3 rows in set (0.00 sec)
+
+8. DISPLAY DEPT NAME,LOC OF ALL THE EMPLOYEES WHO ARE REPORTING TO SMITH.
+
+mysql> select dname,loc from emp e,dept d where e.deptno=d.deptno and mgr=(select empno from emp where ename='simth');
+Empty set (0.00 sec)
+
+10. LIST EMPLOYEES WHO ARE WORKING IN RESEARCH DEPT AND THEY ARE MANAGER.^C
+
+mysql> select  emp.*,dname from emp,dept where mgr in( select mgr from emp,dept where dname='research' group by mgr) and job ='manager' and dname='research';
++-------+-------+---------+------+------------+------+--------+------+----------+
+| EMPNO | ENAME | JOB     | MGR  | HIREDATE   | SAL  | DEPTNO | comm | dname    |
++-------+-------+---------+------+------------+------+--------+------+----------+
+|  7566 | JONE  | MANAGER | 7839 | 1981-04-02 | 2975 |     20 | NULL | Research |
+|  7782 | CLARK | MANAGER | 7839 | 1981-00-09 | 2450 |     10 | NULL | Research |
++-------+-------+---------+------+------------+------+--------+------+----------+
+2 rows in set (0.00 sec)
+
+11. DISPLAY THE NUMBER OF EMPLOYEES WHO ARE GETTING SALARY LESS THAN THE BLAKE'S MANAGER.
+
+Mysql> select * from emp where sal<(select sal from emp where empno=(select mgr from emp where ename='blake'));
++-------+--------+----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+----------+------+------------+------+--------+------+
+|  7369 | SMITH  | CLERK    | 7902 | 2008-12-17 |  800 |     20 | NULL |
+|  7566 | JONE   | MANAGER  | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER  | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1987-04-19 | 3000 |     20 | NULL |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1987-05-23 | 1100 |     20 | NULL |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7902 | FORD   | ANALYST  | 7566 | 1982-11-03 | 3000 |     20 | NULL |
+|  7934 | MILLER | CLERK    | 7782 | 1892-01-22 | 1300 |     10 | NULL |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+----------+------+------------+------+--------+------+
+13 rows in set (0.00 sec)
+
+12. LIST THE EMPLOYEE DEPTNAME AND LOCATION OF ALL THE EMPLOYEES WHO ARE
+ANALYST,REPORTING TO BLAKE.
+
+mysql> select emp.*,dname, loc from emp,dept where job='analyst' and mgr = (select empno from emp where ename='blake');
+Empty set (0.00 sec)
+
+13. DISPLAY THE EMPLOYEE NAMES,HIREDATE,COMM OF FORD'S MANAGER^C
+
+mysql> select ename,hiredate,comm from emp where empno=(select mgr from emp where ename='ford');
++-------+------------+------+
+| ename | hiredate   | comm |
++-------+------------+------+
+| JONE  | 1981-04-02 | NULL |
++-------+------------+------+
+1 row in set (0.00 sec)
+
+14. DISPLAY ENAME, DNAME OF ALL THE EMPLOYEES WHOSE SALARY LESS THAN AVG SAL OF DEPT
+30
+
+mysql> select ename,dname from emp,dept where emp.deptno=dept.deptno and sal<(select avg(sal) from emp where deptno=30);
++--------+------------+
+| ename  | dname      |
++--------+------------+
+| SMITH  | Research   |
+| WARD   | Sales      |
+| TURNER | Sales      |
+| ADAMS  | Research   |
+| JAMES  | Sales      |
+| MILLER | ACCOUNTING |
+| MARTIN | Sales      |
++--------+------------+
+7 rows in set (0.00 sec)
+
+15. DISPLAY ENAME DNAME AND LOC OF ALL THE EMPLOYEES WHO ARE WORKING FOR JONES^C
+
+mysql> select ename,dname,loc,mgr from emp,dept where mgr=(select empno from emp where ename='jone') group by ename ;
++-------+------------+----------+------+
+| ename | dname      | loc      | mgr  |
++-------+------------+----------+------+
+| FORD  | ACCOUNTING | NEW YORK | 7566 |
+| SCOTT | ACCOUNTING | NEW YORK | 7566 |
++-------+------------+----------+------+
+2 rows in set (0.00 sec)
+
+16. DISPLAY ENAME DNAME OF ALL THE EMPLOYEES WHOSE NAME STARTS WITH S^C
+mysql> select ename,dname from emp,dept where ename like 'S%' group by ename;
++-------+------------+
+| ename | dname      |
++-------+------------+
+| SCOTT | ACCOUNTING |
+| SMITH | ACCOUNTING |
++-------+------------+
+2 rows in set (0.00 sec)
+
+17. LIST THE DNAME WHO ARE NOT HAVING ANY EMPLOYEE IN IT^C
+mysql> select dname from dept where deptno not in(select deptno from emp);
++------------+
+| dname      |
++------------+
+| OPERATIONS |
++------------+
+1 row in set (0.00 sec)
+
+20. WRITE A QUERY TO DISPLAY EMPLOYEE NAME, JOB, DNAME, LOCATION OF ALL EMPLOYEES WHO
+    -> ARE WORKING AS ACTUAL MANAGERS AND WORKS AT CHICAGO.^C
+mysql> select ename,job,dname,loc from emp,dept where job='manager'and loc='chicago' group by loc;
++-------+---------+-------+---------+
+| ename | job     | dname | loc     |
++-------+---------+-------+---------+
+| JONE  | MANAGER | Sales | Chicago |
++-------+---------+-------+---------+
+1 row in set (0.00 sec)
+
+
+21. LIST THE DEPARTMENT NAMES IN WHICH THE EMPLOYEES ARE HIRED BETWEEN 1ST OF JAN 1981
+AND 31ST DEC 1982 WITH SALARY MORE THAN 1800.
+
+mysql> select * from dept,emp where dept.deptno=emp.deptno and sal>1800 and hiredate between '1981-01-01' and '1982-12-31'
+    -> ;
++--------+------------+----------+-------+-------+-----------+------+------------+------+--------+------+
+| deptno | dname      | loc      | EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++--------+------------+----------+-------+-------+-----------+------+------------+------+--------+------+
+|     20 | Research   | Dallas   |  7566 | JONE  | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|     30 | Sales      | Chicago  |  7698 | BLAKE |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|     10 | ACCOUNTING | NEW YORK |  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|     20 | Research   | Dallas   |  7902 | FORD  | ANALYST   | 7566 | 1982-11-03 | 3000 |     20 | NULL |
++--------+------------+----------+-------+-------+-----------+------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+
+22. DISPLAY 2ND LEAST SALARY FROM EMPLOYEE TABLE.^C
+
+mysql> select min(sal) from emp where sal not in (select min(sal) from emp);
++----------+
+| min(sal) |
++----------+
+|      950 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+23. LIST THE EMPLOYEES WHOSE ANNUAL SALARY IS GREATER THAN 1500 AND WHO ARE JOINED
+    -> BEFORE 1982 ONLY.^C
+
+mysql> select * from emp where sal*12>1500 and hiredate<'1982-01-01';
++-------+--------+-----------+------+------------+------+--------+------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | DEPTNO | comm |
++-------+--------+-----------+------+------------+------+--------+------+
+|  7566 | JONE   | MANAGER   | 7839 | 1981-04-02 | 2975 |     20 | NULL |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600 |     30 |  300 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250 |     30 |  500 |
+|  7698 | BLAKE  |  MANAGER  | 7839 | 1981-05-01 | 2850 |     30 | NULL |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-00-09 | 2450 |     10 | NULL |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000 |     10 | NULL |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500 |     30 |    0 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950 |     30 | NULL |
+|  7934 | MILLER | CLERK     | 7782 | 1892-01-22 | 1300 |     10 | NULL |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250 |     30 | 1400 |
++-------+--------+-----------+------+------------+------+--------+------+
+10 rows in set (0.00 sec)
+
+25. DISPLAY EMPLOYEE NAME ALONG WITH THEIR MANAGER NAME.^C
+
+mysql> select e1.ename as 'Employee Name',e2.ename as 'Managers Name' from emp e1,emp e2 where e1.mgr=e2.empno;
++---------------+---------------+
+| Employee Name | Managers Name |
++---------------+---------------+
+| SCOTT         | JONE          |
+| FORD          | JONE          |
+| ALLEN         | BLAKE         |
+| WARD          | BLAKE         |
+| TURNER        | BLAKE         |
+| JAMES         | BLAKE         |
+| MARTIN        | BLAKE         |
+| MILLER        | CLARK         |
+| ADAMS         | SCOTT         |
+| JONE          | KING          |
+| BLAKE         | KING          |
+| CLARK         | KING          |
+| SMITH         | FORD          |
++---------------+---------------+
+13 rows in set (0.00 sec)
+
+26. DISPLAY EMPLOYEE NAME AND HIS DEPT NAME FOR THE EMPLOYEES WHOSE NAME STARTS WITH
+    -> ‘S’.^C
+mysql> select ename,dname from emp,dept where ename like 'S%' group by ename;
++-------+------------+
+| ename | dname      |
++-------+------------+
+| SCOTT | ACCOUNTING |
+| SMITH | ACCOUNTING |
++-------+------------+
+2 rows in set (0.00 sec)
+
+
+27. DISPLAY EMPLOYEES WHO ARE GETTING SAME SALARY.
+
+mysql> select distinct e.sal,e.ename from emp e,emp m where e.sal = m.sal and e.ename!=m.ename;
++------+--------+
+| sal  | ename  |
++------+--------+
+| 1250 | MARTIN |
+| 3000 | FORD   |
+| 3000 | SCOTT  |
+| 1250 | WARD   |
++------+--------+
+4 rows in set (0.00 sec)
