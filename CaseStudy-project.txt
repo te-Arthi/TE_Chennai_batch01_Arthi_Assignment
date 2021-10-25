@@ -1,0 +1,432 @@
+Main class:
+package com.te.consolproject.usercredential;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		
+		
+		UserLogin login = new UserLogin();
+		login.sample();
+	}
+
+}
+--------------------------------------------------------------------------------------
+User Login:
+package com.te.consolproject.usercredential;
+
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class UserLogin {
+	final static Logger LOGGER = Logger.getLogger(UserLogin.class.getName());
+	public void sample() {
+		try {
+		System.out.println("------Welcome------");
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Already Registered Press '1'   ");
+		System.out.println("New User Press '2'  ");
+		int option = scanner.nextInt();
+		LOGGER.setLevel(Level.OFF); 
+		switch (option) {
+		case 1:
+			System.out.println("Enter User Credentials ");
+			LoginForm loginForm = new LoginForm();
+			loginForm.test();
+			break;
+			
+		case 2:
+		UserRegister userRegister = new UserRegister();
+		userRegister.register();
+			break;
+		
+		default:
+			System.out.println("Invalid Option re-enter the option");
+			break;
+		}
+		}catch(Exception e){
+			System.out.println("Invalid Option");
+			e.printStackTrace();
+		}finally {
+			//scanner.close();
+		}
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+Login Form:
+package com.te.consolproject.usercredential;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import javax.persistence.Query;
+
+import com.te.consolproject.bean.PrimaryInfo;
+import com.te.consolproject.endurance.Existence;
+
+public class LoginForm extends Existence {
+	
+	//final static Logger LOGGER = Logger.getLogger(UserLogin.class.getName());
+	public void test() {
+		System.out.println("-------Login Page------");
+		LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE);
+
+		try {
+			Scanner scanner = new Scanner(System.in);
+			String update = "from PrimaryInfo where " + "ename=:en and empno =:id";
+			//LOGGER.setLevel(Level.OFF);
+			Query query = em.createQuery(update);
+			System.out.println("Enter Employee/User Name");
+			query.setParameter("en", scanner.next());
+			System.out.println("Enter EmpID");
+			int pas = scanner.nextInt();
+			query.setParameter("id", pas);
+			List<PrimaryInfo> list = query.getResultList();
+			if (list.size() == 1) {
+				System.out.println("Login Successfully");
+				UserChoice user1 = new UserChoice();
+				user1.choose(pas);
+			} else {
+				System.out.println("Invalid Credentials");
+			}
+
+		} catch (Exception e) {
+//e.printStackTrace();
+			System.out.println("Invalid User_name or Password");
+		}
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+User Register:
+package com.te.consolproject.usercredential;
+import java.util.Scanner;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import com.te.consolproject.bean.PrimaryInfo;
+import com.te.consolproject.endurance.Existence;
+
+
+public class UserRegister extends Existence {
+
+	final static Logger LOGGER = Logger.getLogger(UserRegister.class.getName());
+	void register() {
+		LOGGER.setLevel(Level.OFF);
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("-------Please Fill the Fields--------");
+		System.out.println("Enter Name ");
+		String name = scanner.next();
+		System.out.println("Enter Gmail Address ");
+		String gmail = scanner.next();
+		System.out.println("Enter Mobile No");
+		Long mob = scanner.nextLong();		
+		System.out.println("Enter Empno ");
+		int pas = scanner.nextInt();
+		System.out.println("ReEnter Empno ");
+		int pas1 = scanner.nextInt();
+		if(pas==pas1) {
+			System.out.println("Empno matched");
+		}else {
+			System.out.println("Empno mismatch");
+		}
+		PrimaryInfo info = new PrimaryInfo();
+		info.setEname(name);
+		info.setEmail(gmail);
+		info.setMobile(mob);
+		info.setEmpno(pas1);
+		
+		try {
+			et = em.getTransaction();
+			et.begin();
+			em.persist(info);
+			et.commit();
+			System.out.println("------Regitered Sucessfully-----");
+			UserChoice user = new UserChoice();
+			user.choose(pas);
+		} catch (Exception e) {
+			
+			//e.printStackTrace();
+			et.rollback();
+		} finally {
+			scanner.close();
+		}
+
+
+	}
+
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+ViewDetails:
+package com.te.consolproject.usercredential;
+import com.te.consolproject.bean.PrimaryInfo;
+import com.te.consolproject.endurance.Existence;
+
+public class ViewDetails extends Existence   {
+
+		void view(int a) {
+			PrimaryInfo info = em.getReference
+					(PrimaryInfo.class, a);
+			if(info != null) {
+				System.out.println("Employee Name 	: "+info.getEname());
+				System.out.println( "empno:"+info.getEmpno());
+				System.out.println("Email-ID	: "+info.getEmail());
+				System.out.println("Mobile Number	: "+info.getMobile());
+				System.out.println("Role		: "+info.getRole());
+				System.out.println("Salary/Month	: "+info.getSalary());
+				System.out.println("Department Name	: "+info.getDeptname());
+				System.out.println("Department No	: "+info.getDeptno());
+			}
+		}
+	}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+UserChoice:
+package com.te.consolproject.usercredential;
+import java.util.Scanner;
+
+public class UserChoice {
+	public void choose(int pas) {
+		Scanner scanner = new Scanner(System.in);
+		try {
+			System.out.println("Welcome to User Page");
+			System.out.println("choose the option based on your need");
+			System.out.println("To View your Details press 1");
+			System.out.println("To Edit/Update your Details press 2");
+			System.out.println("To Delete your Details press 3");
+
+			int a = scanner.nextInt();
+			switch (a) {
+			case 1:
+				ViewDetails see = new ViewDetails();
+				see.view(pas);
+				break;
+			case 2:
+				UpdateDetails insertDetails = new UpdateDetails();
+				insertDetails.update(pas);
+				break;
+			case 3:
+                DeleteDetails deletedetails=new DeleteDetails();
+                deletedetails.delete(pas)
+;				break;
+			default:
+				System.out.println("Choose correct option");
+				break;
+			}
+		} catch (Exception e) {
+			System.out.println("Choose correct option");
+		} finally {
+			scanner.close();
+		}
+	}
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+UpdateDetails:
+package com.te.consolproject.usercredential;
+
+	
+	import javax.persistence.Query;
+	import com.te.consolproject.endurance.Existence;
+
+	public class UpdateDetails extends Existence {
+		public void update(int pass) {
+			try {
+				et.begin();
+			
+				String update = "update PrimaryInfo set role=:na,"
+						+ "salary=:sal,deptno=:deptno,deptname=:deptname"
+						+" where empno=:id" ;
+				Query query = em.createQuery(update);
+				query.setParameter("id", pass);
+				System.out.println("1. Enter Role ");
+				query.setParameter("na", scanner.next());
+				
+				System.out.println("2. enter Salary");
+				query.setParameter("sal", scanner.nextDouble());
+				System.out.println("3. enter dept no");
+				query.setParameter("deptno", scanner.nextInt());
+				System.out.println("4. enter dept name");
+				query.setParameter("deptname", scanner.next());
+				
+		
+
+				int res = query.executeUpdate();
+				if(res==1) {
+				System.out.println("Updated Sucessfull");
+				}
+				et.commit();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+DeleteDetails:
+package com.te.consolproject.usercredential;
+
+import com.te.consolproject.bean.PrimaryInfo;
+import com.te.consolproject.endurance.Existence;
+
+public class DeleteDetails extends Existence {
+
+	public void delete(int pas) {
+		et.begin();
+		PrimaryInfo info =em.find(PrimaryInfo.class, pas);
+		
+		em.remove(info);
+		et.commit();
+		
+		System.out.println("Deleted Successfully");
+		
+		
+	}
+
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Existence:
+package com.te.consolproject.endurance;
+
+import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class Existence implements AutoCloseable {
+
+	protected Scanner scanner = new Scanner(System.in);
+
+	protected EntityManagerFactory emf = Persistence.createEntityManagerFactory("project");
+
+	public EntityManager em = emf.createEntityManager();
+
+	protected EntityTransaction et = em.getTransaction();
+
+	public void close() throws Exception {
+
+	}
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Primary Info:
+package com.te.consolproject.bean;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="employeeinfo")
+public class PrimaryInfo implements Serializable {
+	public PrimaryInfo() {}
+@Column
+	private String ename;
+	@Column
+	@Id
+	private Integer empno;
+	@Column
+	private Long mobile;
+	@Column
+	private String role;
+	@Column
+	private Integer deptno;
+	@Column
+	private String deptname;
+	@Column
+	private Double salary;
+	@Column
+	private String email;
+	
+	
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+OUTPUT:
+
+------Welcome------
+Already Registered Press '1'   
+New User Press '2'  
+1
+-------Login Page------
+Enter Employee/User Name
+arthi
+Enter EmpID
+10
+Hibernate: 
+    select
+        primaryinf0_.empno as empno1_0_,
+        primaryinf0_.deptname as deptname2_0_,
+        primaryinf0_.deptno as deptno3_0_,
+        primaryinf0_.email as email4_0_,
+        primaryinf0_.ename as ename5_0_,
+        primaryinf0_.mobile as mobile6_0_,
+        primaryinf0_.role as role7_0_,
+        primaryinf0_.salary as salary8_0_ 
+    from
+        employeeinfo primaryinf0_ 
+    where
+        primaryinf0_.ename=? 
+        and primaryinf0_.empno=?
+Login Successfully
+Welcome to User Page
+choose the option based on your need
+To View your Details press 1
+To Edit/Update your Details press 2
+To Delete your Details press 3
+1
+Mon Oct 25 20:54:27 IST 2021 WARN: Establishing SSL connection without server's identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn't set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to 'false'. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+Hibernate: 
+    select
+        primaryinf0_.empno as empno1_0_0_,
+        primaryinf0_.deptname as deptname2_0_0_,
+        primaryinf0_.deptno as deptno3_0_0_,
+        primaryinf0_.email as email4_0_0_,
+        primaryinf0_.ename as ename5_0_0_,
+        primaryinf0_.mobile as mobile6_0_0_,
+        primaryinf0_.role as role7_0_0_,
+        primaryinf0_.salary as salary8_0_0_ 
+    from
+        employeeinfo primaryinf0_ 
+    where
+        primaryinf0_.empno=?
+Employee Name 	: Arthi
+empno:10
+Email-ID	: arthi@gmail.com
+Mobile Number	: 9878767653
+Role		: tester
+Salary/Month	: 20000.0
+Department Name	: testing
+Department No	: 1234
+
+------Welcome------
+Already Registered Press '1'   
+New User Press '2'  
+2
+-------Please Fill the Fields--------
+Enter Name 
+sara
+Enter Gmail Address 
+sara@gmail.com
+Enter Mobile No
+9894956189
+Enter Empno 
+20
+ReEnter Empno 
+20
+Empno matched
